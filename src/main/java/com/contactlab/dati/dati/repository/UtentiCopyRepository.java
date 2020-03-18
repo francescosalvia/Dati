@@ -1,0 +1,22 @@
+package com.contactlab.dati.dati.repository;
+
+import com.contactlab.dati.dati.data.UtenteCopyDb;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Repository
+public interface UtentiCopyRepository extends CrudRepository<UtenteCopyDb, Integer> {
+
+    List<UtenteCopyDb> findAllByProcessed(int processed);
+
+    @Modifying
+    @Transactional
+    @Query(value="LOAD DATA LOCAL INFILE 'C:\\\\Users\\\\francesco.salvia\\\\Desktop\\\\iscrittiRifatto\\\\file.csv' INTO TABLE clienti  FIELDS TERMINATED BY ','  ENCLOSED BY '\"'  LINES TERMINATED BY '\\n'  IGNORE 1 LINES  (UID,EMAIL,AGE,BIRTHDAY,BIRTHMONTH,BIRTHYEAR,CITY,COUNTRY,FIRSTNAME,LASTNAME,GENDER,ZIP,CODPROVINCE,DV_DESKTOPCOUNT,DV_DESKTOPLAST,DV_MOBILECOUNT,DV_MOBILELAST,DV_TABLETCOUNT,DV_TABLETLAST,LASTLOGINDATE,MOBILEPHONE,PR_BAULI,PR_MOTTA,PR_BUONDI,PR_GIRELLA,PR_YOYO,PR_CIOCORI,PR_DORIA,PR_BISTEFANI,PR_ALEMAGNA,PR_CASALINI,PR_BAULIGROUP,PREFERREDRETAILER,PRIVACYPROFILING,PRIVACYRECALL,REGISTRATIONINITIATIVE,TELEPHONE,ISACTIVE,ISREGISTERED,ISVERIFIED,LOGINPROVIDER,SOCIALPROVIDERS,STATUSUSER,ADDRESS,CATEGORYINDEX_BISCUITS,CATEGORYINDEX_MINICAKES,CATEGORYINDEX_SAVOURY,CATEGORYINDEX_SEASONAL,TASTEINDEX_CHOCOLOVER,TASTEINDEX_CREAMLOVER,TASTEINDEX_FILLINGLOVER,TASTEINDEX_FRUITLOVER,TASTEINDEX_PLAINLOVER,TASTEINDEX_SAVOURYLOVER,LASTUPDATEDDATE,OPTINDATE,PRIVACYSTORE,REGISTRATIONDATE,VALASSIS_UID)", nativeQuery = true)
+    public void bulkLoadData();
+
+}
