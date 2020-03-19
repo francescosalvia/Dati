@@ -97,7 +97,7 @@ public class UtenteService {
         Instant start = Instant.now();
 
         logger.info("Scarico il file dal server");
-        SftpConnection.download(sftp.getHostName(),sftp.getUsername(),sftp.getPassword(),sftp.getLocalFilePathDownload(),sftp.getRemoteFilePath());
+        //SftpConnection.download(sftp.getHostName(),sftp.getUsername(),sftp.getPassword(),sftp.getLocalFilePathDownload(),sftp.getRemoteFilePath());
 
         logger.info("leggo e importo il file");
 
@@ -158,10 +158,10 @@ public class UtenteService {
 
         Instant start = Instant.now();
         do {
+            Instant start2 = Instant.now();
             slice = utentiPageRepository.findAllByProcessed(0, pageable);
 
             final List<UtenteDb> lista = slice.getContent();
-
 
             for (int i = 0; i < lista.size(); i++) {
                 UtenteDb utenteDb = lista.get(i);
@@ -171,6 +171,9 @@ public class UtenteService {
 
                 taskExecutor.execute(task);
             }
+
+
+
             int currentMaxNumberOfConcurrentTask =
                     threadPoolBean.waitingQueueCapacity(1000, taskExecutor, 0);
             if (currentMaxNumberOfConcurrentTask == -1) {
@@ -179,6 +182,11 @@ public class UtenteService {
                         "[-1]");
             }
 
+            Instant end2 = Instant.now();
+
+            Duration duration1 = Duration.between(start2, end2);
+
+            logger.info("Tempo per slice  :" + duration1.toMillis() + " ms");
 
 
         } while (slice.hasNext());
