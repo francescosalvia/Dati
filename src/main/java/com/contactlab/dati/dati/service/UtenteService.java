@@ -1,6 +1,5 @@
 package com.contactlab.dati.dati.service;
 
-import com.contactlab.dati.dati.config.DataSource;
 import com.contactlab.dati.dati.config.ThreadPoolBean;
 import com.contactlab.dati.dati.connection.SftpConnection;
 import com.contactlab.dati.dati.dao.DaoGeneral;
@@ -15,12 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +28,6 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -203,28 +199,6 @@ public class UtenteService {
 
         logger.info("Tempo  :" + duration.toMillis() + " ms");
 
-    }
-
-
-
-    public static String prova(){
-        String SQL_QUERY = "select uid from clienti where email = 'gabrielezaccaria46@gmail.com' ";
-       String uid = null;
-        try (Connection con = DataSource.getConnection();
-             PreparedStatement pst = con.prepareStatement( SQL_QUERY );
-             ResultSet rs = pst.executeQuery();) {
-
-            while ( rs.next() ) {
-
-                uid = rs.getString("uid");
-
-            }
-
-            logger.info(uid);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return uid;
     }
 
 

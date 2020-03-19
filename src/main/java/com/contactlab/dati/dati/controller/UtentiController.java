@@ -40,10 +40,5 @@ public class UtentiController {
         service.uploadFile();
     }
 
-    @PostMapping("/prova")
-    public void prova() {
-        service.prova();
-    }
-
 
 }
