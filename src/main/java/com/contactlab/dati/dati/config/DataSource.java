@@ -1,4 +1,4 @@
-package com.contactlab.dati.dati.dao;
+package com.contactlab.dati.dati.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
