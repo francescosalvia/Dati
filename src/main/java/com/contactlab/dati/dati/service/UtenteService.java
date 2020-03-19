@@ -97,7 +97,7 @@ public class UtenteService {
         Instant start = Instant.now();
 
         logger.info("Scarico il file dal server");
-       // SftpConnection.download(sftp.getHostName(),sftp.getUsername(),sftp.getPassword(),sftp.getLocalFilePath(),sftp.getRemoteFilePath());
+        SftpConnection.download(sftp.getHostName(),sftp.getUsername(),sftp.getPassword(),sftp.getLocalFilePathDownload(),sftp.getRemoteFilePath());
 
         logger.info("leggo e importo il file");
 
@@ -111,43 +111,6 @@ public class UtenteService {
 
         logger.info("Method readAll execution lasted:" + duration.toMillis() + " ms");
     }
-
-
-    public void modifyTable() {
-        logger.info("Method modifyTable execution started ");
-
-        Pageable pageable = PageRequest.of(0, 100);
-
-        Page<UtenteDb> page = utentiPageRepository.findAllByProcessed(0, pageable);
-
-        Instant start = Instant.now();
-        while (page.hasNext()) {
-
-            List<UtenteDb> lista = page.getContent();
-
-            for (int i = 0; i < lista.size(); i++) {
-
-                try {
-                    UtenteDb utenteDb = lista.get(i);
-                    transactionService.modifyUtenteTable(utenteDb);
-                } catch (Exception e) {
-                    logger.warn("Exception in modify Utente Table", e);
-                }
-
-            }
-
-            page = utentiPageRepository.findAllByProcessed(0, pageable);
-        }
-
-        Instant end = Instant.now();
-
-        Duration duration = Duration.between(start, end);
-
-        logger.info("Method modifyTable execution lasted:" + duration.toMinutes() + " min");
-
-
-    }
-
 
     public void out() {
 
@@ -179,8 +142,9 @@ public class UtenteService {
     }
 
 
-@Scheduled(fixedDelayString = "${my.delayString:1000}", initialDelayString = "${my.delayInitialString:10000}")
-    public void test() {
+//@Scheduled(fixedDelayString = "${my.delayString:1000}", initialDelayString = "${my.delayInitialString:10000}")
+
+    public void modificaDati() {
 
         ThreadPoolTaskExecutor taskExecutor;
 
@@ -194,22 +158,19 @@ public class UtenteService {
 
         Instant start = Instant.now();
         do {
-
-
             slice = utentiPageRepository.findAllByProcessed(0, pageable);
 
             final List<UtenteDb> lista = slice.getContent();
 
+
             for (int i = 0; i < lista.size(); i++) {
                 UtenteDb utenteDb = lista.get(i);
-
                 final ModifyUtentiRunnable task = applicationContext.getBean(ModifyUtentiRunnable.class);
 
                 task.setUtenteDb(utenteDb);
 
                 taskExecutor.execute(task);
             }
-
             int currentMaxNumberOfConcurrentTask =
                     threadPoolBean.waitingQueueCapacity(1000, taskExecutor, 0);
             if (currentMaxNumberOfConcurrentTask == -1) {

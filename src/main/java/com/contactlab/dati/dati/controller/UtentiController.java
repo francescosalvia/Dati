@@ -25,11 +25,6 @@ public class UtentiController {
         service.readAll();
     }
 
-    @PostMapping("/create")
-    public void create2Table() {
-        service.modifyTable();
-    }
-
     @PostMapping("/scrivi")
     public void scrivi() {
         service.out();
@@ -37,7 +32,7 @@ public class UtentiController {
 
     @PostMapping("/test")
     public void test() {
-        service.test();
+        service.modificaDati();
     }
 
     @PostMapping("/upload")

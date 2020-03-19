@@ -13,7 +13,8 @@ public class SftpProperties {
     private String password;
     private String localFilePath;
     private String remoteFilePath;
-    private String remoteFilePathDestinazione;
+    private String remoteFilePathDestinazioneMove;
+    private String localFilePathDownload;
 
     public String getHostName() {
         return hostName;
@@ -55,11 +56,19 @@ public class SftpProperties {
         this.remoteFilePath = remoteFilePath;
     }
 
-    public String getRemoteFilePathDestinazione() {
-        return remoteFilePathDestinazione;
+    public String getRemoteFilePathDestinazioneMove() {
+        return remoteFilePathDestinazioneMove;
     }
 
-    public void setRemoteFilePathDestinazione(String remoteFilePathDestinazione) {
-        this.remoteFilePathDestinazione = remoteFilePathDestinazione;
+    public void setRemoteFilePathDestinazioneMove(String remoteFilePathDestinazioneMove) {
+        this.remoteFilePathDestinazioneMove = remoteFilePathDestinazioneMove;
+    }
+
+    public String getLocalFilePathDownload() {
+        return localFilePathDownload;
+    }
+
+    public void setLocalFilePathDownload(String localFilePathDownload) {
+        this.localFilePathDownload = localFilePathDownload;
     }
 }
