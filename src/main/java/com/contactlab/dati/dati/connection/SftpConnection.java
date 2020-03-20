@@ -1,8 +1,6 @@
 package com.contactlab.dati.dati.connection;
 
-import com.contactlab.dati.dati.metod.MetodiUtili;
 import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemOptions;
 import org.apache.commons.vfs2.Selectors;
 import org.apache.commons.vfs2.impl.StandardFileSystemManager;
@@ -16,8 +14,7 @@ import java.io.File;
 public class SftpConnection {
     private static final Logger logger = LoggerFactory.getLogger(SftpConnection.class);
 
-  //  private final String[] args = new String[]{"sftp-clab.housing.tomato.it","sftp-barilla","3kE4bvVWCY","C:\\Users\\francesco.salvia\\Desktop\\fileProva.txt", "/incoming/clab_test/francescofileProva.txt","/incoming/clab_test/prova/francescofileProva.txt"};
-    /*  descrizione stringa
+   /*  descrizione stringa
      * args[0]: hostName
      * args[1]: username
      * args[2]: password
@@ -65,12 +62,13 @@ public class SftpConnection {
         try {
             manager.init();
 
-        //    String downloadFilePath = localFilePath.substring(0,
-            //           localFilePath.lastIndexOf("."))
-            //          + "_downlaod_from_sftp"
-            //         + localFilePath.substring(localFilePath.lastIndexOf("."),
-            //         localFilePath.length());
-
+            // per personalizzare nome file download
+       /*    String downloadFilePath = localFilePath.substring(0,
+                     localFilePath.lastIndexOf("."))
+                     + "_downlaod_from_sftp"
+                    + localFilePath.substring(localFilePath.lastIndexOf("."),
+                    localFilePath.length());
+*/
             String downloadFilePath = localFilePath.substring(0);
 
             FileObject localFile = manager.resolveFile(downloadFilePath);
